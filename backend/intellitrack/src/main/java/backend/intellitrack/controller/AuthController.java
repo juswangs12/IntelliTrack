@@ -22,7 +22,7 @@ public class AuthController {
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody LoginRequest request) {
         LoginResponse response = authService.authenticate(request);
-        
+
         if (response == null) {
             Map<String, String> error = new HashMap<>();
             error.put("message", "Invalid credentials");

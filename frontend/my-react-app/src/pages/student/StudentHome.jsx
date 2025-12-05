@@ -1,15 +1,40 @@
-import { FileText, Clock, CheckCircle, AlertCircle } from 'lucide-react';
+import { FileText, Clock, CheckCircle, AlertCircle } from "lucide-react";
 
 export function StudentHome({ user }) {
   const upcomingDeadlines = [
-    { id: 1, title: 'Project Proposal', dueDate: '2025-12-15', status: 'pending' },
-    { id: 2, title: 'SRS Document', dueDate: '2025-12-20', status: 'in-progress' },
-    { id: 3, title: 'SDD Document', dueDate: '2025-12-28', status: 'not-started' }
+    {
+      id: 1,
+      title: "Project Proposal",
+      dueDate: "2025-12-15",
+      status: "pending",
+    },
+    {
+      id: 2,
+      title: "SRS Document",
+      dueDate: "2025-12-20",
+      status: "in-progress",
+    },
+    {
+      id: 3,
+      title: "SDD Document",
+      dueDate: "2025-12-28",
+      status: "not-started",
+    },
   ];
 
   const recentSubmissions = [
-    { id: 1, title: 'Project Proposal - Draft 1', submittedOn: '2025-12-01', status: 'reviewed' },
-    { id: 2, title: 'Team Formation', submittedOn: '2025-11-28', status: 'approved' }
+    {
+      id: 1,
+      title: "Project Proposal - Draft 1",
+      submittedOn: "2025-12-01",
+      status: "reviewed",
+    },
+    {
+      id: 2,
+      title: "Team Formation",
+      submittedOn: "2025-11-28",
+      status: "approved",
+    },
   ];
 
   return (
@@ -68,7 +93,9 @@ export function StudentHome({ user }) {
       <div className="card">
         <div className="card-header">
           <h2 className="card-title">Upcoming Deadlines</h2>
-          <p className="card-description">Stay on track with your submissions</p>
+          <p className="card-description">
+            Stay on track with your submissions
+          </p>
         </div>
         <div className="card-content">
           <div className="table-container">
@@ -87,12 +114,16 @@ export function StudentHome({ user }) {
                     <td>{deadline.title}</td>
                     <td>{deadline.dueDate}</td>
                     <td>
-                      <span className={`badge ${
-                        deadline.status === 'pending' ? 'warning' :
-                        deadline.status === 'in-progress' ? 'info' :
-                        'danger'
-                      }`}>
-                        {deadline.status.replace('-', ' ')}
+                      <span
+                        className={`badge ${
+                          deadline.status === "pending"
+                            ? "warning"
+                            : deadline.status === "in-progress"
+                            ? "info"
+                            : "danger"
+                        }`}
+                      >
+                        {deadline.status.replace("-", " ")}
                       </span>
                     </td>
                     <td>
@@ -128,11 +159,15 @@ export function StudentHome({ user }) {
                     <td>{submission.title}</td>
                     <td>{submission.submittedOn}</td>
                     <td>
-                      <span className={`badge ${
-                        submission.status === 'approved' ? 'success' :
-                        submission.status === 'reviewed' ? 'info' :
-                        'warning'
-                      }`}>
+                      <span
+                        className={`badge ${
+                          submission.status === "approved"
+                            ? "success"
+                            : submission.status === "reviewed"
+                            ? "info"
+                            : "warning"
+                        }`}
+                      >
                         {submission.status}
                       </span>
                     </td>

@@ -11,7 +11,7 @@ import java.util.stream.Collectors;
 
 @Service
 public class SubmissionService {
-    
+
     private final Map<Long, Submission> submissions = new HashMap<>();
     private Long nextId = 1L;
 
@@ -21,15 +21,15 @@ public class SubmissionService {
 
     private void initializeSampleData() {
         // Sample submissions
-        Submission sub1 = new Submission(1L, SubmissionType.PROJECT_PROPOSAL, 
-            "IntelliTrack System Proposal", "Capstone project proposal");
+        Submission sub1 = new Submission(1L, SubmissionType.PROJECT_PROPOSAL,
+                "IntelliTrack System Proposal", "Capstone project proposal");
         sub1.setId(nextId++);
         sub1.setStudentName("John Doe");
         sub1.setStatus(SubmissionStatus.UNDER_REVIEW);
         submissions.put(sub1.getId(), sub1);
 
-        Submission sub2 = new Submission(1L, SubmissionType.SRS, 
-            "Software Requirements Specification", "SRS Document");
+        Submission sub2 = new Submission(1L, SubmissionType.SRS,
+                "Software Requirements Specification", "SRS Document");
         sub2.setId(nextId++);
         sub2.setStudentName("John Doe");
         sub2.setStatus(SubmissionStatus.PENDING);
@@ -51,8 +51,8 @@ public class SubmissionService {
 
     public List<Submission> getSubmissionsByStudentId(Long studentId) {
         return submissions.values().stream()
-            .filter(s -> s.getStudentId().equals(studentId))
-            .collect(Collectors.toList());
+                .filter(s -> s.getStudentId().equals(studentId))
+                .collect(Collectors.toList());
     }
 
     public List<Submission> getAllSubmissions() {
@@ -61,8 +61,8 @@ public class SubmissionService {
 
     public List<Submission> getSubmissionsByStatus(SubmissionStatus status) {
         return submissions.values().stream()
-            .filter(s -> s.getStatus() == status)
-            .collect(Collectors.toList());
+                .filter(s -> s.getStatus() == status)
+                .collect(Collectors.toList());
     }
 
     public Submission updateSubmission(Long id, Submission updatedSubmission) {

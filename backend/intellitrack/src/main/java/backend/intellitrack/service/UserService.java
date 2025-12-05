@@ -7,7 +7,7 @@ import java.util.*;
 
 @Service
 public class UserService {
-    
+
     private final Map<Long, User> users = new HashMap<>();
 
     public List<User> getAllUsers() {

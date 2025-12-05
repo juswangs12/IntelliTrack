@@ -1,11 +1,13 @@
-import { Upload, FileText, Download } from 'lucide-react';
+import { Upload, FileText, Download } from "lucide-react";
 
 export function ProjectProposal() {
   return (
     <div>
       <div className="page-header">
         <h1 className="page-title">Project Proposal</h1>
-        <p className="page-description">Submit and track your project proposal</p>
+        <p className="page-description">
+          Submit and track your project proposal
+        </p>
       </div>
 
       <div className="card">
@@ -14,7 +16,7 @@ export function ProjectProposal() {
           <p className="card-description">Due Date: December 15, 2025</p>
         </div>
         <div className="card-content">
-          <div style={{ marginBottom: '1.5rem' }}>
+          <div style={{ marginBottom: "1.5rem" }}>
             <label className="form-label">Project Title</label>
             <input
               type="text"
@@ -23,33 +25,36 @@ export function ProjectProposal() {
             />
           </div>
 
-          <div style={{ marginBottom: '1.5rem' }}>
+          <div style={{ marginBottom: "1.5rem" }}>
             <label className="form-label">Team Members</label>
             <textarea
               rows="3"
               placeholder="List team members"
               className="form-input"
-              style={{ resize: 'vertical' }}
+              style={{ resize: "vertical" }}
             />
           </div>
 
-          <div style={{ marginBottom: '1.5rem' }}>
+          <div style={{ marginBottom: "1.5rem" }}>
             <label className="form-label">Upload Document</label>
             <div
               style={{
-                border: '2px dashed #d1d5db',
-                borderRadius: '0.5rem',
-                padding: '2rem',
-                textAlign: 'center',
-                cursor: 'pointer',
-                transition: 'all 0.2s'
+                border: "2px dashed #d1d5db",
+                borderRadius: "0.5rem",
+                padding: "2rem",
+                textAlign: "center",
+                cursor: "pointer",
+                transition: "all 0.2s",
               }}
             >
-              <Upload className="w-12 h-12" style={{ margin: '0 auto', color: '#9ca3af' }} />
-              <p style={{ marginTop: '0.5rem', color: '#6b7280' }}>
+              <Upload
+                className="w-12 h-12"
+                style={{ margin: "0 auto", color: "#9ca3af" }}
+              />
+              <p style={{ marginTop: "0.5rem", color: "#6b7280" }}>
                 Click to upload or drag and drop
               </p>
-              <p style={{ fontSize: '0.75rem', color: '#9ca3af' }}>
+              <p style={{ fontSize: "0.75rem", color: "#9ca3af" }}>
                 PDF, DOC, DOCX (Max 10MB)
               </p>
             </div>

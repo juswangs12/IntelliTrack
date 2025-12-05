@@ -10,7 +10,7 @@ import java.util.*;
 
 @Service
 public class AuthService {
-    
+
     // Simulated user database
     private final Map<String, User> users = new HashMap<>();
 
@@ -26,7 +26,8 @@ public class AuthService {
         users.put("student@example.com", student);
 
         // Coordinator user
-        User coordinator = new User("Dr. Jane Smith", "coordinator@example.com", "coordinator123", UserRole.COORDINATOR);
+        User coordinator = new User("Dr. Jane Smith", "coordinator@example.com", "coordinator123",
+                UserRole.COORDINATOR);
         coordinator.setId(2L);
         coordinator.setDepartment("Computer Science Department");
         coordinator.setPosition("Associate Professor");
@@ -40,7 +41,7 @@ public class AuthService {
 
     public LoginResponse authenticate(LoginRequest request) {
         User user = users.get(request.getEmail());
-        
+
         if (user == null) {
             return null;
         }
@@ -58,11 +59,10 @@ public class AuthService {
 
         // Create response
         LoginResponse response = new LoginResponse(
-            user.getId(),
-            user.getName(),
-            user.getEmail(),
-            roleString
-        );
+                user.getId(),
+                user.getName(),
+                user.getEmail(),
+                roleString);
 
         return response;
     }

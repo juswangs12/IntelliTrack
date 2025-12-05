@@ -1,16 +1,52 @@
-import { Users, FileCheck, Clock, AlertCircle } from 'lucide-react';
+import { Users, FileCheck, Clock, AlertCircle } from "lucide-react";
 
 export function CoordinatorHome({ user }) {
   const pendingReviews = [
-    { id: 1, student: 'John Doe', document: 'Project Proposal', submittedOn: '2025-12-01', priority: 'high' },
-    { id: 2, student: 'Jane Smith', document: 'SRS Document', submittedOn: '2025-12-02', priority: 'medium' },
-    { id: 3, student: 'Mike Johnson', document: 'SDD Document', submittedOn: '2025-12-03', priority: 'low' }
+    {
+      id: 1,
+      student: "John Doe",
+      document: "Project Proposal",
+      submittedOn: "2025-12-01",
+      priority: "high",
+    },
+    {
+      id: 2,
+      student: "Jane Smith",
+      document: "SRS Document",
+      submittedOn: "2025-12-02",
+      priority: "medium",
+    },
+    {
+      id: 3,
+      student: "Mike Johnson",
+      document: "SDD Document",
+      submittedOn: "2025-12-03",
+      priority: "low",
+    },
   ];
 
   const advisedTeams = [
-    { id: 1, teamName: 'Team Alpha', members: 4, project: 'IntelliTrack System', status: 'on-track' },
-    { id: 2, teamName: 'Team Beta', members: 3, project: 'Library Management', status: 'at-risk' },
-    { id: 3, teamName: 'Team Gamma', members: 4, project: 'Inventory System', status: 'on-track' }
+    {
+      id: 1,
+      teamName: "Team Alpha",
+      members: 4,
+      project: "IntelliTrack System",
+      status: "on-track",
+    },
+    {
+      id: 2,
+      teamName: "Team Beta",
+      members: 3,
+      project: "Library Management",
+      status: "at-risk",
+    },
+    {
+      id: 3,
+      teamName: "Team Gamma",
+      members: 4,
+      project: "Inventory System",
+      status: "on-track",
+    },
   ];
 
   return (
@@ -69,7 +105,9 @@ export function CoordinatorHome({ user }) {
       <div className="card">
         <div className="card-header">
           <h2 className="card-title">Pending Reviews</h2>
-          <p className="card-description">Student submissions awaiting your feedback</p>
+          <p className="card-description">
+            Student submissions awaiting your feedback
+          </p>
         </div>
         <div className="card-content">
           <div className="table-container">
@@ -90,11 +128,15 @@ export function CoordinatorHome({ user }) {
                     <td>{review.document}</td>
                     <td>{review.submittedOn}</td>
                     <td>
-                      <span className={`badge ${
-                        review.priority === 'high' ? 'danger' :
-                        review.priority === 'medium' ? 'warning' :
-                        'info'
-                      }`}>
+                      <span
+                        className={`badge ${
+                          review.priority === "high"
+                            ? "danger"
+                            : review.priority === "medium"
+                            ? "warning"
+                            : "info"
+                        }`}
+                      >
                         {review.priority}
                       </span>
                     </td>
@@ -134,14 +176,18 @@ export function CoordinatorHome({ user }) {
                     <td>{team.members} students</td>
                     <td>{team.project}</td>
                     <td>
-                      <span className={`badge ${
-                        team.status === 'on-track' ? 'success' : 'warning'
-                      }`}>
-                        {team.status.replace('-', ' ')}
+                      <span
+                        className={`badge ${
+                          team.status === "on-track" ? "success" : "warning"
+                        }`}
+                      >
+                        {team.status.replace("-", " ")}
                       </span>
                     </td>
                     <td>
-                      <button className="btn btn-secondary">View Details</button>
+                      <button className="btn btn-secondary">
+                        View Details
+                      </button>
                     </td>
                   </tr>
                 ))}
