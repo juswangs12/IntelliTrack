@@ -1,5 +1,5 @@
 import { useState } from 'react';
-"import { LogOut, Users, Settings, Calendar, Bell, User, Home, Shield, Database, FileText } from 'lucide-react';"
+import { LogOut, Users, Settings, Calendar, Bell, User, Home, Shield, Database, FileText } from 'lucide-react';
 
 export function AdminDashboard({ user, onLogout }) {
   const [activeModule, setActiveModule] = useState('home');
