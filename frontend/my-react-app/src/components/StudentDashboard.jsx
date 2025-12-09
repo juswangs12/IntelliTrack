@@ -1,28 +1,32 @@
-import { Home, FileText, User } from 'lucide-react';
-import { Outlet, useNavigate } from 'react-router-dom';
-import { Layout } from './Layout';
+import { Home, FileText, User } from "lucide-react";
+import { Outlet, useNavigate } from "react-router-dom";
+import { Layout } from "./Layout";
 
 export function StudentDashboard({ user, onLogout }) {
   const navigate = useNavigate();
 
   const navItems = [
-    { id: 'home', name: 'Home', icon: Home, path: '/student/home' },
+    { id: "home", name: "Home", icon: Home, path: "/student/home" },
     {
-      id: 'submissions',
-      name: 'Submissions',
+      id: "submissions",
+      name: "Submissions",
       icon: FileText,
       dropdown: [
-        { id: 'proposal', name: 'Project Proposal', path: '/student/submissions/proposal' },
-        { id: 'srs', name: 'SRS', path: '/student/submissions/srs' },
-        { id: 'sdd', name: 'SDD', path: '/student/submissions/sdd' }
-      ]
+        {
+          id: "proposal",
+          name: "Project Proposal",
+          path: "/student/submissions/proposal",
+        },
+        { id: "srs", name: "SRS", path: "/student/submissions/srs" },
+        { id: "sdd", name: "SDD", path: "/student/submissions/sdd" },
+      ],
     },
-    { id: 'profile', name: 'Profile', icon: User, path: '/student/profile' }
+    { id: "profile", name: "Profile", icon: User, path: "/student/profile" },
   ];
 
   const handleLogout = () => {
     onLogout();
-    navigate('/');
+    navigate("/");
   };
 
   return (

@@ -173,10 +173,10 @@ $RECYCLE.BIN/
 local.properties
 
 # Package files
-*.7z
-*.dmg
-*.gz
-*.iso
-*.rar
-*.tar
-*.zip
+# *.7z
+# *.dmg
+# *.gz
+# *.iso
+# *.rar
+# *.tar
+# *.zip

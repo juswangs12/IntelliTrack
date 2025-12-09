@@ -81,21 +81,52 @@ A comprehensive capstone project management system with role-based authenticatio
 
 ### Prerequisites
 
-- Node.js 18+ and npm
-- Java 21+
-- Maven
+- **Node.js 18+** and npm
+- **Java 21+**
+- **Maven**
 
-### Frontend Setup
+### Initial Setup (First Time Only)
+
+#### 1. Clone the Repository
+
+```bash
+git clone https://github.com/juswangs12/IntelliTrack.git
+cd IntelliTrack
+```
+
+#### 2. Frontend Setup
 
 ```bash
 cd frontend/my-react-app
 npm install
+```
+
+**Important**: The `npm install` command will install all dependencies listed in `package.json`, including:
+- React, React Router, Vite
+- Tailwind CSS and PostCSS
+- Radix UI components (@radix-ui/react-*)
+- Utility libraries (clsx, class-variance-authority, tailwind-merge)
+- Lucide React icons
+
+#### 3. Backend Setup
+
+```bash
+cd backend/intellitrack
+./mvnw clean install
+```
+
+### Running the Application
+
+#### Start Frontend Development Server
+
+```bash
+cd frontend/my-react-app
 npm run dev
 ```
 
 Frontend will run on `http://localhost:5173`
 
-### Backend Setup
+#### Start Backend Server
 
 ```bash
 cd backend/intellitrack
@@ -103,6 +134,48 @@ cd backend/intellitrack
 ```
 
 Backend will run on `http://localhost:8080`
+
+### 🔄 For Team Members (After Pulling Updates)
+
+**Always run these commands after pulling from git:**
+
+```bash
+# In the frontend directory
+cd frontend/my-react-app
+npm install
+
+# In the backend directory (if pom.xml changed)
+cd backend/intellitrack
+./mvnw clean install
+```
+
+**Why?** Git doesn't track `node_modules/` or `target/` folders. When someone adds new dependencies, you need to install them locally.
+
+### 🛠️ Troubleshooting Common Issues
+
+#### White Screen or "Module not found" errors
+```bash
+cd frontend/my-react-app
+npm install
+npm run dev
+```
+
+#### PostCSS or Tailwind errors
+```bash
+cd frontend/my-react-app
+npm install -D @tailwindcss/postcss tailwindcss postcss autoprefixer
+npm run dev
+```
+
+#### Backend build errors
+```bash
+cd backend/intellitrack
+./mvnw clean install -U
+```
+
+#### Port already in use
+- Frontend: Vite will auto-increment to 5174, 5175, etc.
+- Backend: Change port in `application.properties`: `server.port=8081`
 
 ## 🎨 Design System
 
