@@ -11,6 +11,13 @@ import { ProjectProposal } from './pages/student/ProjectProposal';
 import { SRSDocument } from './pages/student/SRSDocument';
 import { SDDDocument } from './pages/student/SDDDocument';
 import { StudentProfile } from './pages/student/StudentProfile';
+import { ProfileManagement } from './pages/student/ProfileManagement';
+import { VersionControl } from './pages/student/VersionControl';
+import { DocumentReview } from './pages/student/DocumentReview';
+
+// Adviser Pages
+import { AdviserFeedbackEvaluation } from './pages/adviser/AdviserFeedbackEvaluation';
+import { SubmissionInsights } from './pages/adviser/SubmissionInsights';
 
 // Coordinator Pages
 import { CoordinatorHome } from './pages/coordinator/CoordinatorHome';
@@ -27,23 +34,9 @@ import { Analytics } from './pages/admin/Analytics';
 export default function App() {
   const [currentUser, setCurrentUser] = useState(null);
 
-  const handleLogin = (email, password) => {
-    // Mock login logic - determine role based on email pattern
-    let role = 'student';
-    let name = 'User';
-
-    if (email.includes('admin')) {
-      role = 'admin';
-      name = 'Admin User';
-    } else if (email.includes('adviser') || email.includes('teacher')) {
-      role = 'coordinator';
-      name = 'Dr. John Smith';
-    } else {
-      role = 'student';
-      name = 'Jane Doe';
-    }
-
-    setCurrentUser({ name, email, role });
+  const handleLogin = (userData) => {
+    // LoginPage passes user object with { name, role, email }
+    setCurrentUser(userData);
   };
 
   const handleLogout = () => {
@@ -90,6 +83,9 @@ export default function App() {
           <Route path="submissions/srs" element={<SRSDocument />} />
           <Route path="submissions/sdd" element={<SDDDocument />} />
           <Route path="profile" element={<StudentProfile user={currentUser} />} />
+          <Route path="profile-management" element={<ProfileManagement />} />
+          <Route path="version-control" element={<VersionControl />} />
+          <Route path="document-review" element={<DocumentReview />} />
           <Route path="*" element={<Navigate to="/student/home" replace />} />
         </Route>
 
@@ -107,6 +103,8 @@ export default function App() {
           <Route path="home" element={<CoordinatorHome user={currentUser} />} />
           <Route path="calendar" element={<CoordinatorCalendar />} />
           <Route path="profile" element={<CoordinatorProfile user={currentUser} />} />
+          <Route path="feedback-evaluation" element={<AdviserFeedbackEvaluation />} />
+          <Route path="submission-insights" element={<SubmissionInsights />} />
           <Route path="*" element={<Navigate to="/coordinator/home" replace />} />
         </Route>
 
