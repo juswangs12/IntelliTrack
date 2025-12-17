@@ -1,4 +1,4 @@
-import { Home, Calendar, User } from 'lucide-react';
+import { Home, Calendar, User, messageSquareText } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { Layout } from './Layout';
 
@@ -8,7 +8,8 @@ export function CoordinatorDashboard({ user, onLogout }) {
   const navItems = [
     { id: 'home', name: 'Home', icon: Home, path: '/coordinator/home' },
     { id: 'calendar', name: 'Calendar', icon: Calendar, path: '/coordinator/calendar' },
-    { id: 'profile', name: 'Profile', icon: User, path: '/coordinator/profile' }
+    { id: 'profile', name: 'Profile', icon: User, path: '/coordinator/profile' },
+    { id: 'feedback-evaluation', name: 'Feedback Evaluation', icon: messageSquareText, path: '/coordinator/feedback-evaluation' }
   ];
 
   const handleLogout = () => {
