@@ -5,65 +5,47 @@ import { Button } from './ui/button';
 import { Label } from './ui/label';
 import { GraduationCap, Lock, Mail } from "lucide-react";
 import { useNavigate } from "react-router-dom";
-
-// Fixed credentials for simulation
-const USERS = {
-  student: {
-    email: "student@example.com",
-    password: "student123",
-    name: "John Doe",
-    role: "student",
-  },
-  coordinator: {
-    email: "coordinator@example.com",
-    password: "coordinator123",
-    name: "Dr. Jane Smith",
-    role: "coordinator",
-  },
-  admin: {
-    email: "admin@example.com",
-    password: "admin123",
-    name: "Admin User",
-    role: "admin",
-  },
-};
+import { authAPI } from '../services/api';
 
 export function LoginPage({ onLogin }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [role, setRole] = useState("student");
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
 
-    // Check if credentials match the selected role
-    const user = USERS[role];
+    try {
+      const response = await authAPI.login(email, password);
+      // Assuming response has { id, name, email, role, token }
+      localStorage.setItem('token', response.token);
+      localStorage.setItem('user', JSON.stringify({
+        id: response.id,
+        name: response.name,
+        email: response.email,
+        role: response.role
+      }));
 
-    if (email === user.email && password === user.password) {
-      // Successful login
-      onLogin({ name: user.name, role: user.role, email: user.email });
+      onLogin({
+        id: response.id,
+        name: response.name,
+        role: response.role,
+        email: response.email
+      });
 
       // Navigate to appropriate dashboard
-      if (role === "student") {
+      if (response.role === "STUDENT") {
         navigate("/student/home");
-      } else if (role === "coordinator") {
+      } else if (response.role === "COORDINATOR") {
         navigate("/coordinator/home");
-      } else if (role === "admin") {
+      } else if (response.role === "ADMIN") {
         navigate("/admin/home");
       }
-    } else {
+    } catch (err) {
       setError("Invalid credentials. Please check your email and password.");
     }
-  };
-
-  const fillCredentials = (selectedRole) => {
-    const user = USERS[selectedRole];
-    setEmail(user.email);
-    setPassword(user.password);
-    setRole(selectedRole);
   };
 
   return (
@@ -78,22 +60,6 @@ export function LoginPage({ onLogin }) {
         </div>
 
         <form onSubmit={handleSubmit} className="login-form">
-          <div className="form-group">
-            <label htmlFor="role" className="form-label">
-              Select Role
-            </label>
-            <select
-              id="role"
-              value={role}
-              onChange={(e) => setRole(e.target.value)}
-              className="form-select"
-            >
-              <option value="student">Student</option>
-              <option value="coordinator">Coordinator/Adviser</option>
-              <option value="admin">Admin</option>
-            </select>
-          </div>
-
           <div className="form-group">
             <label htmlFor="email" className="form-label">
               Email Address
