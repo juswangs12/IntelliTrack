@@ -1,41 +1,57 @@
 package backend.intellitrack.service;
 
 import backend.intellitrack.model.User;
+import backend.intellitrack.repository.UserRepository;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.*;
+import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserService {
-    
-    private final Map<Long, User> users = new HashMap<>();
 
-    public List<User> getAllUsers() {
-        return new ArrayList<>(users.values());
+    private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
+
+    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
+        this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
-    public User getUserById(Long id) {
-        return users.get(id);
+    public List<User> getAllUsers() {
+        return userRepository.findAll();
+    }
+
+    public Optional<User> getUserById(Long id) {
+        return userRepository.findById(id);
     }
 
     public User createUser(User user) {
-        users.put(user.getId(), user);
-        return user;
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        return userRepository.save(user);
     }
 
     public User updateUser(Long id, User updatedUser) {
-        User existing = users.get(id);
-        if (existing != null) {
-            existing.setName(updatedUser.getName());
-            existing.setEmail(updatedUser.getEmail());
-            existing.setRole(updatedUser.getRole());
-            existing.setActive(updatedUser.isActive());
-            return existing;
+        Optional<User> existing = userRepository.findById(id);
+        if (existing.isPresent()) {
+            User user = existing.get();
+            user.setName(updatedUser.getName());
+            user.setEmail(updatedUser.getEmail());
+            user.setRole(updatedUser.getRole());
+            if (updatedUser.getPassword() != null && !updatedUser.getPassword().isEmpty()) {
+                user.setPassword(passwordEncoder.encode(updatedUser.getPassword()));
+            }
+            return userRepository.save(user);
         }
         return null;
     }
 
     public boolean deleteUser(Long id) {
-        return users.remove(id) != null;
+        if (userRepository.existsById(id)) {
+            userRepository.deleteById(id);
+            return true;
+        }
+        return false;
     }
 }

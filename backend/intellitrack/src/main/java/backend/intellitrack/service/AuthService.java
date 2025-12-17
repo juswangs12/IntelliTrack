@@ -1,77 +1,44 @@
 package backend.intellitrack.service;
 
-import backend.intellitrack.dto.LoginRequest;
-import backend.intellitrack.dto.LoginResponse;
 import backend.intellitrack.model.User;
-import backend.intellitrack.model.UserRole;
+import backend.intellitrack.repository.UserRepository;
+import backend.intellitrack.security.JwtUtil;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
-import java.util.*;
 
 @Service
 public class AuthService {
-    
-    // Simulated user database
-    private final Map<String, User> users = new HashMap<>();
 
-    public AuthService() {
-        initializeUsers();
+    private final AuthenticationManager authenticationManager;
+    private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
+    private final JwtUtil jwtUtil;
+
+    public AuthService(AuthenticationManager authenticationManager, UserRepository userRepository, PasswordEncoder passwordEncoder, JwtUtil jwtUtil) {
+        this.authenticationManager = authenticationManager;
+        this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
+        this.jwtUtil = jwtUtil;
     }
 
-    private void initializeUsers() {
-        // Student user
-        User student = new User("John Doe", "student@example.com", "student123", UserRole.STUDENT);
-        student.setId(1L);
-        student.setStudentId("2024-00001");
-        users.put("student@example.com", student);
-
-        // Coordinator user
-        User coordinator = new User("Dr. Jane Smith", "coordinator@example.com", "coordinator123", UserRole.COORDINATOR);
-        coordinator.setId(2L);
-        coordinator.setDepartment("Computer Science Department");
-        coordinator.setPosition("Associate Professor");
-        users.put("coordinator@example.com", coordinator);
-
-        // Admin user
-        User admin = new User("Admin User", "admin@example.com", "admin123", UserRole.ADMIN);
-        admin.setId(3L);
-        users.put("admin@example.com", admin);
+    public String login(String email, String password) {
+        Authentication authentication = authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(email, password));
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+        User user = userRepository.findByEmail(email).orElseThrow();
+        return jwtUtil.generateToken(new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(), authentication.getAuthorities()));
     }
 
-    public LoginResponse authenticate(LoginRequest request) {
-        User user = users.get(request.getEmail());
-        
-        if (user == null) {
-            return null;
-        }
-
-        // Verify password
-        if (!user.getPassword().equals(request.getPassword())) {
-            return null;
-        }
-
-        // Verify role matches
-        String roleString = user.getRole().name().toLowerCase();
-        if (!roleString.equals(request.getRole().toLowerCase())) {
-            return null;
-        }
-
-        // Create response
-        LoginResponse response = new LoginResponse(
-            user.getId(),
-            user.getName(),
-            user.getEmail(),
-            roleString
-        );
-
-        return response;
+    public void logout() {
+        SecurityContextHolder.clearContext();
     }
 
-    public User getUserByEmail(String email) {
-        return users.get(email);
-    }
-
-    public List<User> getAllUsers() {
-        return new ArrayList<>(users.values());
+    public boolean validateToken(String token) {
+        // Implement token validation if needed
+        return true;
     }
 }

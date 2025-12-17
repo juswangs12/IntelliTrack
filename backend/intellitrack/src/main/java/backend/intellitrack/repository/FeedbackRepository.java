@@ -1,0 +1,7 @@
+package backend.intellitrack.repository;
+
+import backend.intellitrack.model.Feedback;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface FeedbackRepository extends JpaRepository<Feedback, Long> {
+}
