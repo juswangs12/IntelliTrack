@@ -136,18 +136,7 @@ export function Analytics() {
         </div>
       </div>
 
-      {/* Chart Placeholder */}
-      <div className="card">
-        <div className="card-header">
-          <h2 className="card-title">Submission Trends</h2>
-        </div>
-        <div className="card-content">
-          <div style={{ textAlign: 'center', padding: '3rem', color: '#6b7280' }}>
-            <BarChart className="w-16 h-16" style={{ margin: '0 auto 1rem', color: '#9ca3af' }} />
-            <p>Chart visualization coming soon...</p>
-          </div>
-        </div>
-      </div>
+
     </div>
   );
 }

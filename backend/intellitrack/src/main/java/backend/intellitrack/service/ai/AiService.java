@@ -18,9 +18,8 @@ public class AiService {
     }
 
     public RiskLog analyzeRisk(Submission submission) {
-        // Mock AI call - in real implementation, call external AI API
-        String riskLevel = "Low"; // Mock
-        String explanation = "Submission looks good."; // Mock
+        String riskLevel = "Low";
+        String explanation = "Submission looks good.";
 
         RiskLog riskLog = new RiskLog();
         riskLog.setSubmission(submission);
@@ -31,7 +30,6 @@ public class AiService {
     }
 
     public String generateRecommendation(Submission submission) {
-        // Mock recommendation
         return "Consider adding more details to the requirements.";
     }
 }

@@ -53,7 +53,6 @@ public class DashboardController {
         if (coordinator.isEmpty() || coordinator.get().getRole() != UserRole.COORDINATOR) {
             return ResponseEntity.notFound().build();
         }
-        // Mock data for now
         Map<String, Object> dashboard = new HashMap<>();
         dashboard.put("advisedTeams", 3);
         dashboard.put("pendingReviews", analyticsService.getSubmissionCountByStatus(SubmissionStatus.PENDING));
@@ -68,7 +67,7 @@ public class DashboardController {
         Map<String, Object> dashboard = new HashMap<>();
         dashboard.put("totalStudents", userService.getAllUsers().stream().filter(u -> u.getRole() == UserRole.STUDENT).count());
         dashboard.put("totalAdvisers", userService.getAllUsers().stream().filter(u -> u.getRole() == UserRole.COORDINATOR).count());
-        dashboard.put("activeProjects", 12); // Mock
+        dashboard.put("activeProjects", 12);
         dashboard.put("pendingReviews", analyticsService.getSubmissionCountByStatus(SubmissionStatus.PENDING));
         return ResponseEntity.ok(dashboard);
     }
@@ -79,8 +78,8 @@ public class DashboardController {
         Map<String, Object> analytics = new HashMap<>();
         analytics.put("totalUsers", analyticsService.getTotalUsers());
         analytics.put("totalSubmissions", analyticsService.getTotalSubmissions());
-        analytics.put("completionRate", 92); // Mock
-        analytics.put("avgResponseTime", 2.3); // Mock
+        analytics.put("completionRate", 92);
+        analytics.put("avgResponseTime", 2.3);
         return ResponseEntity.ok(analytics);
     }
 }

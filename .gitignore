@@ -60,6 +60,8 @@ out/
 # Dependencies
 node_modules/
 jspm_packages/
+/.pnp
+.pnp.js
 
 # Production builds
 /frontend/my-react-app/dist
@@ -70,6 +72,7 @@ jspm_packages/
 # Testing
 coverage/
 .nyc_output
+*.lcov
 
 # Cache and temp files
 .npm
@@ -80,6 +83,16 @@ coverage/
 .cache
 .parcel-cache
 .vite
+*.local
+
+# Tailwind CSS
+.tailwindcss-*
+
+# PostCSS
+.postcssrc
+
+# TypeScript
+*.tsbuildinfo
 
 # Environment variables
 .env
@@ -96,6 +109,17 @@ yarn-debug.log*
 yarn-error.log*
 lerna-debug.log*
 pnpm-debug.log*
+
+# Editor directories and files
+.idea
+.vscode/*
+!.vscode/extensions.json
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
 
 # ===================================
 # Operating System Files

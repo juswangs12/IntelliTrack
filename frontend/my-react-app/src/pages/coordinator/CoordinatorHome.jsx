@@ -1,11 +1,33 @@
 import { Users, FileCheck, Clock, AlertCircle } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 
 export function CoordinatorHome({ user }) {
+  const navigate = useNavigate();
+  const calculatePriority = (submittedOn) => {
+    const submitDate = new Date(submittedOn);
+    const today = new Date();
+    const daysDiff = Math.floor((today - submitDate) / (1000 * 60 * 60 * 24));
+    
+    if (daysDiff >= 3) return 'high';
+    if (daysDiff >= 2) return 'medium';
+    return 'low';
+  };
+
+  const calculateDaysAgo = (submittedOn) => {
+    const submitDate = new Date(submittedOn);
+    const today = new Date();
+    return Math.floor((today - submitDate) / (1000 * 60 * 60 * 24));
+  };
+
   const pendingReviews = [
-    { id: 1, student: 'John Doe', document: 'Project Proposal', submittedOn: '2025-12-01', priority: 'high' },
-    { id: 2, student: 'Jane Smith', document: 'SRS Document', submittedOn: '2025-12-02', priority: 'medium' },
-    { id: 3, student: 'Mike Johnson', document: 'SDD Document', submittedOn: '2025-12-03', priority: 'low' }
-  ];
+    { id: 1, teamName: 'Team Alpha', document: 'Project Proposal', submittedOn: '2025-12-01' },
+    { id: 2, teamName: 'Team Beta', document: 'SRS Document', submittedOn: '2025-12-02' },
+    { id: 3, teamName: 'Team Gamma', document: 'SDD Document', submittedOn: '2025-12-03' }
+  ].map(review => ({
+    ...review,
+    priority: calculatePriority(review.submittedOn),
+    daysAgo: calculateDaysAgo(review.submittedOn)
+  }));
 
   const advisedTeams = [
     { id: 1, teamName: 'Team Alpha', members: 4, project: 'IntelliTrack System', status: 'on-track' },
@@ -76,7 +98,7 @@ export function CoordinatorHome({ user }) {
             <table className="data-table">
               <thead>
                 <tr>
-                  <th>Student</th>
+                  <th>Team</th>
                   <th>Document</th>
                   <th>Submitted On</th>
                   <th>Priority</th>
@@ -86,9 +108,14 @@ export function CoordinatorHome({ user }) {
               <tbody>
                 {pendingReviews.map((review) => (
                   <tr key={review.id}>
-                    <td>{review.student}</td>
+                    <td>{review.teamName}</td>
                     <td>{review.document}</td>
-                    <td>{review.submittedOn}</td>
+                    <td>
+                      {review.submittedOn}
+                      <div style={{ fontSize: '0.75rem', color: '#6b7280', marginTop: '0.25rem' }}>
+                        {review.daysAgo} {review.daysAgo === 1 ? 'day' : 'days'} ago
+                      </div>
+                    </td>
                     <td>
                       <span className={`badge ${
                         review.priority === 'high' ? 'danger' :
@@ -99,7 +126,12 @@ export function CoordinatorHome({ user }) {
                       </span>
                     </td>
                     <td>
-                      <button className="btn btn-primary">Review</button>
+                      <button 
+                        className="btn btn-primary"
+                        onClick={() => navigate('/coordinator/document-review')}
+                      >
+                        Review
+                      </button>
                     </td>
                   </tr>
                 ))}

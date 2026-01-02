@@ -8,7 +8,8 @@ public class LoginResponse {
     private String token;
 
     // Constructors
-    public LoginResponse() {}
+    public LoginResponse() {
+    }
 
     public LoginResponse(Long id, String name, String email, String role) {
         this.id = id;

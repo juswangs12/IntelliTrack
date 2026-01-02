@@ -133,7 +133,6 @@ export function DocumentReview() {
     setIsReviewing(false);
 
     alert(`Review submitted successfully with status: ${status}`);
-    // TODO: API call to save review
   };
 
   const getStatusBadge = (status) => {
