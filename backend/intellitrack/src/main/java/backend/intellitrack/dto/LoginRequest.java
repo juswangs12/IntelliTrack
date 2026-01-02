@@ -6,7 +6,8 @@ public class LoginRequest {
     private String role;
 
     // Constructors
-    public LoginRequest() {}
+    public LoginRequest() {
+    }
 
     public LoginRequest(String email, String password, String role) {
         this.email = email;
