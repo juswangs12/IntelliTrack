@@ -1,35 +1,42 @@
-import { useState } from 'react';
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
-import { LoginPage } from './components/LoginPage';
-import { StudentDashboard } from './components/StudentDashboard';
-import { CoordinatorDashboard } from './components/CoordinatorDashboard';
-import { AdminDashboard } from './components/AdminDashboard';
+import { useState } from "react";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { LoginPage } from "./components/LoginPage";
+import { StudentDashboard } from "./components/StudentDashboard";
+import { CoordinatorDashboard } from "./components/CoordinatorDashboard";
+import { AdminDashboard } from "./components/AdminDashboard";
 
 // Student Pages
-import { StudentHome } from './pages/student/StudentHome';
-import { ProjectProposal } from './pages/student/ProjectProposal';
-import { SRSDocument } from './pages/student/SRSDocument';
-import { SDDDocument } from './pages/student/SDDDocument';
-import { StudentProfile } from './pages/student/StudentProfile';
-import { ProfileManagement } from './pages/student/ProfileManagement';
-import { VersionControl } from './pages/student/VersionControl';
-import { DocumentReview } from './pages/student/DocumentReview';
+import { StudentHome } from "./pages/student/StudentHome";
+import { ProjectProposal } from "./pages/student/ProjectProposal";
+import { SRSDocument } from "./pages/student/SRSDocument";
+import { SDDDocument } from "./pages/student/SDDDocument";
+import { StudentProfile } from "./pages/student/StudentProfile";
+import { ProfileManagement } from "./pages/student/ProfileManagement";
+import { VersionControl } from "./pages/student/VersionControl";
+import { DocumentReview } from "./pages/student/DocumentReview";
 
 // Adviser Pages
-import { AdviserFeedbackEvaluation } from './pages/adviser/AdviserFeedbackEvaluation';
-import { SubmissionInsights } from './pages/adviser/SubmissionInsights';
+import { AdviserFeedbackEvaluation } from "./pages/adviser/AdviserFeedbackEvaluation";
+import { SubmissionInsights } from "./pages/adviser/SubmissionInsights";
 
 // Coordinator Pages
-import { CoordinatorHome } from './pages/coordinator/CoordinatorHome';
-import { CoordinatorCalendar } from './pages/coordinator/CoordinatorCalendar';
-import { CoordinatorProfile } from './pages/coordinator/CoordinatorProfile';
+import { CoordinatorHome } from "./pages/coordinator/CoordinatorHome";
+import { CoordinatorCalendar } from "./pages/coordinator/CoordinatorCalendar";
+import { CoordinatorProfile } from "./pages/coordinator/CoordinatorProfile";
+import { DocumentReview as CoordinatorDocumentReview } from "./pages/coordinator/DocumentReview";
 
 // Admin Pages
-import { AdminHome } from './pages/admin/AdminHome';
-import { UserManagement } from './pages/admin/UserManagement';
-import { SystemConfig } from './pages/admin/SystemConfig';
-import { Deadlines } from './pages/admin/Deadlines';
-import { Analytics } from './pages/admin/Analytics';
+import { AdminHome } from "./pages/admin/AdminHome";
+import { UserManagement } from "./pages/admin/UserManagement";
+import { SystemConfig } from "./pages/admin/SystemConfig";
+import { Deadlines } from "./pages/admin/Deadlines";
+import { Analytics } from "./pages/admin/Analytics";
+import { GroupManagement } from "./pages/admin/GroupManagement";
+import { GroupAssignment } from "./pages/admin/GroupAssignment";
+
+// Shared Components
+import { NotificationCenter } from "./components/NotificationCenter";
+import { AIAssistant } from "./components/AIAssistant";
 
 export default function App() {
   const [currentUser, setCurrentUser] = useState(null);
@@ -53,11 +60,11 @@ export default function App() {
             currentUser ? (
               <Navigate
                 to={
-                  currentUser.role === 'student'
-                    ? '/student/home'
-                    : currentUser.role === 'coordinator'
-                    ? '/coordinator/home'
-                    : '/admin/home'
+                  currentUser.role === "student"
+                    ? "/student/home"
+                    : currentUser.role === "coordinator"
+                    ? "/coordinator/home"
+                    : "/admin/home"
                 }
                 replace
               />
@@ -71,7 +78,7 @@ export default function App() {
         <Route
           path="/student/*"
           element={
-            currentUser?.role === 'student' ? (
+            currentUser?.role === "student" ? (
               <StudentDashboard user={currentUser} onLogout={handleLogout} />
             ) : (
               <Navigate to="/" replace />
@@ -82,7 +89,10 @@ export default function App() {
           <Route path="submissions/proposal" element={<ProjectProposal />} />
           <Route path="submissions/srs" element={<SRSDocument />} />
           <Route path="submissions/sdd" element={<SDDDocument />} />
-          <Route path="profile" element={<StudentProfile user={currentUser} />} />
+          <Route
+            path="profile"
+            element={<StudentProfile user={currentUser} />}
+          />
           <Route path="profile-management" element={<ProfileManagement />} />
           <Route path="version-control" element={<VersionControl />} />
           <Route path="document-review" element={<DocumentReview />} />
@@ -93,8 +103,11 @@ export default function App() {
         <Route
           path="/coordinator/*"
           element={
-            currentUser?.role === 'coordinator' ? (
-              <CoordinatorDashboard user={currentUser} onLogout={handleLogout} />
+            currentUser?.role === "coordinator" ? (
+              <CoordinatorDashboard
+                user={currentUser}
+                onLogout={handleLogout}
+              />
             ) : (
               <Navigate to="/" replace />
             )
@@ -102,17 +115,27 @@ export default function App() {
         >
           <Route path="home" element={<CoordinatorHome user={currentUser} />} />
           <Route path="calendar" element={<CoordinatorCalendar />} />
-          <Route path="profile" element={<CoordinatorProfile user={currentUser} />} />
-          <Route path="feedback-evaluation" element={<AdviserFeedbackEvaluation />} />
+          <Route path="document-review" element={<CoordinatorDocumentReview />} />
+          <Route
+            path="profile"
+            element={<CoordinatorProfile user={currentUser} />}
+          />
+          <Route
+            path="feedback-evaluation"
+            element={<AdviserFeedbackEvaluation />}
+          />
           <Route path="submission-insights" element={<SubmissionInsights />} />
-          <Route path="*" element={<Navigate to="/coordinator/home" replace />} />
+          <Route
+            path="*"
+            element={<Navigate to="/coordinator/home" replace />}
+          />
         </Route>
 
         {/* Admin Routes */}
         <Route
           path="/admin/*"
           element={
-            currentUser?.role === 'admin' ? (
+            currentUser?.role === "admin" ? (
               <AdminDashboard user={currentUser} onLogout={handleLogout} />
             ) : (
               <Navigate to="/" replace />
@@ -121,6 +144,8 @@ export default function App() {
         >
           <Route path="home" element={<AdminHome user={currentUser} />} />
           <Route path="users" element={<UserManagement />} />
+          <Route path="groups" element={<GroupManagement />} />
+          <Route path="assignments" element={<GroupAssignment />} />
           <Route path="system" element={<SystemConfig />} />
           <Route path="deadlines" element={<Deadlines />} />
           <Route path="analytics" element={<Analytics />} />

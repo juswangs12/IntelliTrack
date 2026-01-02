@@ -85,7 +85,7 @@ export function Deadlines() {
         <div className="card-content">
           <div style={{ textAlign: 'center', padding: '3rem', color: '#6b7280' }}>
             <Calendar className="w-16 h-16" style={{ margin: '0 auto 1rem', color: '#9ca3af' }} />
-            <p>Calendar view coming soon...</p>
+            <p>Full calendar integration in progress</p>
           </div>
         </div>
       </div>

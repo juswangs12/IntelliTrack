@@ -19,7 +19,12 @@ export function SubmissionInsights() {
   const [timeRange, setTimeRange] = useState('month');
   const [statusFilter, setStatusFilter] = useState('all');
 
-  // Mock analytics data
+  const calculatePriority = (daysOpen) => {
+    if (daysOpen >= 3) return 'high';
+    if (daysOpen >= 2) return 'medium';
+    return 'low';
+  };
+
   const metrics = {
     totalSubmissions: 156,
     pendingReviews: 23,
@@ -29,7 +34,6 @@ export function SubmissionInsights() {
     thisMonth: 48
   };
 
-  // Mock submission trend data
   const trendData = [
     { period: 'Week 1', submissions: 8, approvals: 6, revisions: 2 },
     { period: 'Week 2', submissions: 12, approvals: 9, revisions: 3 },
@@ -37,12 +41,10 @@ export function SubmissionInsights() {
     { period: 'Week 4', submissions: 13, approvals: 10, revisions: 3 }
   ];
 
-  // Mock recent submissions
   const recentSubmissions = [
     {
       id: 1,
-      student: 'John Doe',
-      studentId: '2021-12345',
+      teamName: 'Team Alpha',
       title: 'Capstone Proposal',
       version: '3.0',
       submittedAt: '2025-12-17 09:30 AM',
@@ -51,8 +53,7 @@ export function SubmissionInsights() {
     },
     {
       id: 2,
-      student: 'Jane Smith',
-      studentId: '2021-12346',
+      teamName: 'Team Beta',
       title: 'Final Document',
       version: '2.0',
       submittedAt: '2025-12-16 02:15 PM',
@@ -61,8 +62,7 @@ export function SubmissionInsights() {
     },
     {
       id: 3,
-      student: 'Bob Johnson',
-      studentId: '2021-12347',
+      teamName: 'Team Gamma',
       title: 'Chapter 3 Revision',
       version: '4.0',
       submittedAt: '2025-12-15 11:00 AM',
@@ -71,8 +71,7 @@ export function SubmissionInsights() {
     },
     {
       id: 4,
-      student: 'Alice Williams',
-      studentId: '2021-12348',
+      teamName: 'Team Delta',
       title: 'Methodology Draft',
       version: '1.0',
       submittedAt: '2025-12-14 04:45 PM',
@@ -81,8 +80,7 @@ export function SubmissionInsights() {
     },
     {
       id: 5,
-      student: 'Charlie Brown',
-      studentId: '2021-12349',
+      teamName: 'Team Epsilon',
       title: 'Literature Review',
       version: '2.0',
       submittedAt: '2025-12-13 10:20 AM',
@@ -105,12 +103,6 @@ export function SubmissionInsights() {
   const filteredSubmissions = statusFilter === 'all' 
     ? recentSubmissions 
     : recentSubmissions.filter(s => s.status === statusFilter);
-
-  // TODO: API call to fetch analytics data
-  // const fetchAnalytics = async (timeRange) => { ... }
-
-  // TODO: API call to filter submissions by status
-  // const filterByStatus = async (status) => { ... }
 
   return (
     <div className="p-6 space-y-6">
@@ -258,14 +250,6 @@ export function SubmissionInsights() {
               </div>
             ))}
           </div>
-
-          {/* Placeholder for chart library integration */}
-          <div className="mt-6 p-4 border-2 border-dashed border-muted-foreground/25 rounded-lg text-center">
-            <BarChart3 className="w-12 h-12 mx-auto text-muted-foreground mb-2" />
-            <p className="text-sm text-muted-foreground">
-              Enhanced chart visualization available with Chart.js or Recharts integration
-            </p>
-          </div>
         </CardContent>
       </Card>
 
@@ -317,9 +301,8 @@ export function SubmissionInsights() {
                       <div className="flex items-center gap-4 text-sm text-muted-foreground mb-2">
                         <span className="flex items-center gap-1">
                           <Users className="w-3 h-3" />
-                          {submission.student}
+                          {submission.teamName}
                         </span>
-                        <span>ID: {submission.studentId}</span>
                         <span className="flex items-center gap-1">
                           <Clock className="w-3 h-3" />
                           {submission.submittedAt}
@@ -327,6 +310,13 @@ export function SubmissionInsights() {
                       </div>
                       <div className="flex items-center gap-2">
                         {getStatusBadge(submission.status)}
+                        <Badge variant="outline" className={
+                          calculatePriority(submission.daysOpen) === 'high' ? 'border-red-500 text-red-600' :
+                          calculatePriority(submission.daysOpen) === 'medium' ? 'border-yellow-500 text-yellow-600' :
+                          'border-blue-500 text-blue-600'
+                        }>
+                          {calculatePriority(submission.daysOpen)} priority
+                        </Badge>
                         <span className="text-xs text-muted-foreground">
                           {submission.daysOpen} {submission.daysOpen === 1 ? 'day' : 'days'} open
                         </span>

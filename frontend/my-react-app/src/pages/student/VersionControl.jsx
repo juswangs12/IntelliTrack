@@ -19,9 +19,8 @@ import {
 export function VersionControl() {
   const [selectedVersion, setSelectedVersion] = useState(null);
   const [isUploadModalOpen, setIsUploadModalOpen] = useState(false);
-  const [userRole, setUserRole] = useState('student'); // 'student' or 'adviser'
+  const [userRole, setUserRole] = useState('student');
 
-  // Mock version history data
   const [versionHistory, setVersionHistory] = useState([
     {
       id: 'v1',
@@ -91,14 +90,12 @@ export function VersionControl() {
   const handleFileUpload = (event) => {
     const file = event.target.files[0];
     if (file) {
-      // TODO: API call to upload file
       console.log('Uploading file:', file.name);
       setIsUploadModalOpen(false);
     }
   };
 
   const handleApproveVersion = (versionId) => {
-    // TODO: API call to approve version
     console.log('Approving version:', versionId);
     setVersionHistory(prev =>
       prev.map(v =>
@@ -110,7 +107,6 @@ export function VersionControl() {
   };
 
   const handleRejectVersion = (versionId) => {
-    // TODO: API call to reject version
     console.log('Rejecting version:', versionId);
     setVersionHistory(prev =>
       prev.map(v =>
@@ -122,7 +118,6 @@ export function VersionControl() {
   };
 
   const handleRestoreVersion = (versionId) => {
-    // TODO: API call to restore/rollback to this version
     console.log('Restoring version:', versionId);
   };
 

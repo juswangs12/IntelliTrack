@@ -44,10 +44,8 @@ export function ProfileManagement() {
   };
 
   const handleSavePersonalInfo = async () => {
-    // API call would go here
     console.log('Saving personal info:', personalInfo);
     setIsEditing(false);
-    // TODO: Call API endpoint to update personal information
   };
 
   const openModal = (type) => {
@@ -60,10 +58,8 @@ export function ProfileManagement() {
       alert('Emails do not match!');
       return;
     }
-    // API call would go here
     console.log('Changing email to:', emailData.newEmail);
     setIsModalOpen(false);
-    // TODO: Call API endpoint to change email
   };
 
   const handlePasswordChange = async () => {
@@ -71,10 +67,8 @@ export function ProfileManagement() {
       alert('Passwords do not match!');
       return;
     }
-    // API call would go here
     console.log('Changing password');
     setIsModalOpen(false);
-    // TODO: Call API endpoint to change password
   };
 
   return (

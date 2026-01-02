@@ -1,6 +1,7 @@
-import { Bell, LogOut } from 'lucide-react';
+import { LogOut } from 'lucide-react';
+import { NotificationCenter } from './NotificationCenter';
 
-export function Navbar({ title, icon: Icon, onLogout }) {
+export function Navbar({ title, icon: Icon, user, onLogout }) {
   return (
     <nav className="navbar">
       <div className="navbar-container">
@@ -9,10 +10,7 @@ export function Navbar({ title, icon: Icon, onLogout }) {
           <span className="navbar-title">{title}</span>
         </div>
         <div className="navbar-right">
-          <button className="navbar-notification">
-            <Bell className="w-5 h-5" />
-            <span className="notification-badge">3</span>
-          </button>
+          <NotificationCenter userRole={user?.role} />
           <button onClick={onLogout} className="navbar-logout">
             <LogOut className="w-4 h-4" />
             Logout
