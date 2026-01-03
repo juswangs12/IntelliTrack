@@ -1,9 +1,6 @@
 package backend.intellitrack.model;
 
 import jakarta.persistence.*;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 @Table(name = "projects")
@@ -14,62 +11,31 @@ public class Project {
     private Long id;
 
     @Column(nullable = false)
-    private String name;
+    private String title;
 
-    @ManyToOne
-    @JoinColumn(name = "coordinator_id")
-    private User coordinator;
+    private String academicYear;
 
-    @ManyToMany
-    @JoinTable(
-        name = "project_students",
-        joinColumns = @JoinColumn(name = "project_id"),
-        inverseJoinColumns = @JoinColumn(name = "student_id")
-    )
-    private List<User> students;
+    @Column(name = "coordinator_id", nullable = false)
+    private Long coordinatorId;
 
-    private LocalDateTime createdAt;
-    private LocalDateTime updatedAt;
+    public Project() {}
 
-    public Project() {
-        this.students = new ArrayList<>();
-    }
-
-    public Project(Long id, String name, User coordinator, List<User> students, LocalDateTime createdAt, LocalDateTime updatedAt) {
+    public Project(Long id, String title, String academicYear, Long coordinatorId) {
         this.id = id;
-        this.name = name;
-        this.coordinator = coordinator;
-        this.students = students;
-        this.createdAt = createdAt;
-        this.updatedAt = updatedAt;
-    }
-
-    @PrePersist
-    void onCreate() {
-        createdAt = LocalDateTime.now();
-        updatedAt = LocalDateTime.now();
-    }
-
-    @PreUpdate
-    void onUpdate() {
-        updatedAt = LocalDateTime.now();
+        this.title = title;
+        this.academicYear = academicYear;
+        this.coordinatorId = coordinatorId;
     }
 
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
 
-    public String getName() { return name; }
-    public void setName(String name) { this.name = name; }
+    public String getTitle() { return title; }
+    public void setTitle(String title) { this.title = title; }
 
-    public User getCoordinator() { return coordinator; }
-    public void setCoordinator(User coordinator) { this.coordinator = coordinator; }
+    public String getAcademicYear() { return academicYear; }
+    public void setAcademicYear(String academicYear) { this.academicYear = academicYear; }
 
-    public List<User> getStudents() { return students; }
-    public void setStudents(List<User> students) { this.students = students; }
-
-    public LocalDateTime getCreatedAt() { return createdAt; }
-    public void setCreatedAt(LocalDateTime createdAt) { this.createdAt = createdAt; }
-
-    public LocalDateTime getUpdatedAt() { return updatedAt; }
-    public void setUpdatedAt(LocalDateTime updatedAt) { this.updatedAt = updatedAt; }
+    public Long getCoordinatorId() { return coordinatorId; }
+    public void setCoordinatorId(Long coordinatorId) { this.coordinatorId = coordinatorId; }
 }

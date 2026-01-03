@@ -28,5 +28,28 @@ public class AnalyticsService {
         return userRepository.count();
     }
 
-    // Add more analytics methods as needed
+    // Submission completion rates
+    public double getSubmissionCompletionRate() {
+        long total = getTotalSubmissions();
+        long approved = getSubmissionCountByStatus(SubmissionStatus.APPROVED);
+        return total > 0 ? (double) approved / total : 0;
+    }
+
+    // Late submission counts (placeholder, need deadline logic)
+    public long getLateSubmissionCount() {
+        // Implement logic to count submissions past deadline
+        return 0; // placeholder
+    }
+
+    // Adviser feedback response times (placeholder)
+    public double getAverageFeedbackResponseTime() {
+        // Implement logic to calculate average time from submission to feedback
+        return 0; // placeholder
+    }
+
+    // Project-level progress summaries (placeholder)
+    public String getProjectProgressSummary(Long projectId) {
+        // Implement logic to summarize progress for a project
+        return "Project progress summary"; // placeholder
+    }
 }

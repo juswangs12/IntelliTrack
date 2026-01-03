@@ -1,7 +1,6 @@
 package backend.intellitrack.model;
 
 import jakarta.persistence.*;
-import java.util.Set;
 
 @Entity
 @Table(name = "project_groups")
@@ -11,32 +10,26 @@ public class ProjectGroup {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String groupName;
+    @Column(name = "project_id", nullable = false)
+    private Long projectId;
 
-    @ManyToOne
-    private User adviser;
+    @Column(name = "adviser_id", nullable = false)
+    private Long adviserId;
 
-    @ManyToMany
-    private Set<User> students;
-    
     public ProjectGroup() {}
 
-    public ProjectGroup(Long id, String groupName, User adviser, Set<User> students) {
+    public ProjectGroup(Long id, Long projectId, Long adviserId) {
         this.id = id;
-        this.groupName = groupName;
-        this.adviser = adviser;
-        this.students = students;
+        this.projectId = projectId;
+        this.adviserId = adviserId;
     }
 
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
 
-    public String getGroupName() { return groupName; }
-    public void setGroupName(String groupName) { this.groupName = groupName; }
+    public Long getProjectId() { return projectId; }
+    public void setProjectId(Long projectId) { this.projectId = projectId; }
 
-    public User getAdviser() { return adviser; }
-    public void setAdviser(User adviser) { this.adviser = adviser; }
-
-    public Set<User> getStudents() { return students; }
-    public void setStudents(Set<User> students) { this.students = students; }
+    public Long getAdviserId() { return adviserId; }
+    public void setAdviserId(Long adviserId) { this.adviserId = adviserId; }
 }

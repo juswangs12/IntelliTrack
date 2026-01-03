@@ -42,7 +42,7 @@ public class DashboardController {
         dashboard.put("totalSubmissions", submissions.size());
         dashboard.put("pendingReviews", submissions.stream().filter(s -> s.getStatus() == SubmissionStatus.PENDING).count());
         dashboard.put("approved", submissions.stream().filter(s -> s.getStatus() == SubmissionStatus.APPROVED).count());
-        dashboard.put("revisionsNeeded", submissions.stream().filter(s -> s.getStatus() == SubmissionStatus.REVISION_NEEDED).count());
+        dashboard.put("revisionsNeeded", submissions.stream().filter(s -> s.getStatus() == SubmissionStatus.REJECTED).count());
         return ResponseEntity.ok(dashboard);
     }
 

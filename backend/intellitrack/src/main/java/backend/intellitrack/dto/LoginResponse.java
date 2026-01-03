@@ -2,7 +2,6 @@ package backend.intellitrack.dto;
 
 public class LoginResponse {
     private Long id;
-    private String name;
     private String email;
     private String role;
     private String token;
@@ -11,9 +10,8 @@ public class LoginResponse {
     public LoginResponse() {
     }
 
-    public LoginResponse(Long id, String name, String email, String role) {
+    public LoginResponse(Long id, String email, String role) {
         this.id = id;
-        this.name = name;
         this.email = email;
         this.role = role;
     }
@@ -25,14 +23,6 @@ public class LoginResponse {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public String getEmail() {

@@ -60,13 +60,13 @@ public class UserController {
         return ResponseEntity.ok(updated);
     }
 
-    @DeleteMapping("/{id}")
+    @PutMapping("/{id}/deactivate")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<?> deleteUser(@PathVariable Long id) {
-        boolean deleted = userService.deleteUser(id);
+    public ResponseEntity<?> deactivateUser(@PathVariable Long id) {
+        boolean deactivated = userService.deactivateUser(id);
         Map<String, Object> response = new HashMap<>();
-        if (deleted) {
-            response.put("message", "User deleted successfully");
+        if (deactivated) {
+            response.put("message", "User deactivated successfully");
             return ResponseEntity.ok(response);
         } else {
             response.put("message", "User not found");

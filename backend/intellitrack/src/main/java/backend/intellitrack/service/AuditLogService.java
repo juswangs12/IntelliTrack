@@ -31,4 +31,13 @@ public class AuditLogService {
     public void deleteAuditLog(Long id) {
         auditLogRepository.deleteById(id);
     }
+
+    public void logAction(Long userId, String action, String entityType, Long entityId) {
+        AuditLog log = new AuditLog();
+        log.setUserId(userId);
+        log.setAction(action);
+        log.setEntityType(entityType);
+        log.setEntityId(entityId);
+        saveAuditLog(log);
+    }
 }

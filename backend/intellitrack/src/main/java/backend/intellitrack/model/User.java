@@ -17,37 +17,33 @@ public class User {
     @Column(nullable = false)
     private String password;
 
-    @Column(nullable = false)
-    private String name;
-
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private UserRole role;
 
+    @Column(nullable = false)
+    private boolean active = true;
+
     private LocalDateTime createdAt;
-    private LocalDateTime updatedAt;
+
+    @Column(name = "group_id")
+    private Long groupId;
 
     public User() {}
 
-    public User(Long id, String email, String password, String name, UserRole role, LocalDateTime createdAt, LocalDateTime updatedAt) {
+    public User(Long id, String email, String password, UserRole role, boolean active, LocalDateTime createdAt, Long groupId) {
         this.id = id;
         this.email = email;
         this.password = password;
-        this.name = name;
         this.role = role;
+        this.active = active;
         this.createdAt = createdAt;
-        this.updatedAt = updatedAt;
+        this.groupId = groupId;
     }
 
     @PrePersist
     void onCreate() {
         createdAt = LocalDateTime.now();
-        updatedAt = LocalDateTime.now();
-    }
-
-    @PreUpdate
-    void onUpdate() {
-        updatedAt = LocalDateTime.now();
     }
 
     public Long getId() { return id; }
@@ -59,15 +55,15 @@ public class User {
     public String getPassword() { return password; }
     public void setPassword(String password) { this.password = password; }
 
-    public String getName() { return name; }
-    public void setName(String name) { this.name = name; }
-
     public UserRole getRole() { return role; }
     public void setRole(UserRole role) { this.role = role; }
+
+    public boolean isActive() { return active; }
+    public void setActive(boolean active) { this.active = active; }
 
     public LocalDateTime getCreatedAt() { return createdAt; }
     public void setCreatedAt(LocalDateTime createdAt) { this.createdAt = createdAt; }
 
-    public LocalDateTime getUpdatedAt() { return updatedAt; }
-    public void setUpdatedAt(LocalDateTime updatedAt) { this.updatedAt = updatedAt; }
+    public Long getGroupId() { return groupId; }
+    public void setGroupId(Long groupId) { this.groupId = groupId; }
 }

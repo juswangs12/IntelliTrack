@@ -20,6 +20,10 @@ public class MilestoneService {
         return milestoneRepository.findAll();
     }
 
+    public List<Milestone> getMilestonesByProjectIdAndActive(Long projectId, boolean active) {
+        return milestoneRepository.findByProjectIdAndActive(projectId, active);
+    }
+
     public Optional<Milestone> getMilestoneById(Long id) {
         return milestoneRepository.findById(id);
     }

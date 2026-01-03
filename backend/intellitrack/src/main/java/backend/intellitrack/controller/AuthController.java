@@ -26,7 +26,7 @@ public class AuthController {
         try {
             String token = authService.login(request.getEmail(), request.getPassword());
             User user = userRepository.findByEmail(request.getEmail()).orElseThrow();
-            LoginResponse response = new LoginResponse(user.getId(), user.getName(), user.getEmail(), user.getRole().name().toLowerCase());
+            LoginResponse response = new LoginResponse(user.getId(), user.getEmail(), user.getRole().name().toLowerCase());
             response.setToken(token);
             return ResponseEntity.ok(response);
         } catch (Exception e) {

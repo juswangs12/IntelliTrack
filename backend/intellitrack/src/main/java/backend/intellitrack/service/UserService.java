@@ -29,6 +29,7 @@ public class UserService {
 
     public User createUser(User user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
+        user.setActive(true);
         return userRepository.save(user);
     }
 
@@ -36,9 +37,10 @@ public class UserService {
         Optional<User> existing = userRepository.findById(id);
         if (existing.isPresent()) {
             User user = existing.get();
-            user.setName(updatedUser.getName());
             user.setEmail(updatedUser.getEmail());
             user.setRole(updatedUser.getRole());
+            user.setActive(updatedUser.isActive());
+            user.setGroupId(updatedUser.getGroupId());
             if (updatedUser.getPassword() != null && !updatedUser.getPassword().isEmpty()) {
                 user.setPassword(passwordEncoder.encode(updatedUser.getPassword()));
             }
@@ -47,9 +49,11 @@ public class UserService {
         return null;
     }
 
-    public boolean deleteUser(Long id) {
-        if (userRepository.existsById(id)) {
-            userRepository.deleteById(id);
+    public boolean deactivateUser(Long id) {
+        Optional<User> user = userRepository.findById(id);
+        if (user.isPresent()) {
+            user.get().setActive(false);
+            userRepository.save(user.get());
             return true;
         }
         return false;

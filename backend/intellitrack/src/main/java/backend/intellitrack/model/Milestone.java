@@ -11,30 +11,39 @@ public class Milestone {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String title;
+    @Column(nullable = false)
+    private String name;
 
     private LocalDateTime deadline;
 
-    private boolean requiresApproval;
+    @Column(name = "project_id", nullable = false)
+    private Long projectId;
+
+    @Column(nullable = false)
+    private boolean active = true;
 
     public Milestone() {}
 
-    public Milestone(Long id, String title, LocalDateTime deadline, boolean requiresApproval) {
+    public Milestone(Long id, String name, LocalDateTime deadline, Long projectId, boolean active) {
         this.id = id;
-        this.title = title;
+        this.name = name;
         this.deadline = deadline;
-        this.requiresApproval = requiresApproval;
+        this.projectId = projectId;
+        this.active = active;
     }
 
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
 
-    public String getTitle() { return title; }
-    public void setTitle(String title) { this.title = title; }
+    public String getName() { return name; }
+    public void setName(String name) { this.name = name; }
 
     public LocalDateTime getDeadline() { return deadline; }
     public void setDeadline(LocalDateTime deadline) { this.deadline = deadline; }
 
-    public boolean isRequiresApproval() { return requiresApproval; }
-    public void setRequiresApproval(boolean requiresApproval) { this.requiresApproval = requiresApproval; }
+    public Long getProjectId() { return projectId; }
+    public void setProjectId(Long projectId) { this.projectId = projectId; }
+
+    public boolean isActive() { return active; }
+    public void setActive(boolean active) { this.active = active; }
 }

@@ -1,9 +1,10 @@
 package backend.intellitrack.controller;
 
-import backend.intellitrack.model.RiskLog;
+import backend.intellitrack.model.SubmissionRisk;
 import backend.intellitrack.model.Submission;
 import backend.intellitrack.service.SubmissionService;
-import backend.intellitrack.service.ai.AiService;
+import backend.intellitrack.service.ai.RiskEngineService;
+import backend.intellitrack.service.ai.GeminiService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -14,23 +15,25 @@ import java.util.Optional;
 @RequestMapping("/api/ai")
 public class AiController {
 
-    private final AiService aiService;
+    private final RiskEngineService riskEngineService;
     private final SubmissionService submissionService;
+    private final GeminiService geminiService;
 
-    public AiController(AiService aiService, SubmissionService submissionService) {
-        this.aiService = aiService;
+    public AiController(RiskEngineService riskEngineService, SubmissionService submissionService, GeminiService geminiService) {
+        this.riskEngineService = riskEngineService;
         this.submissionService = submissionService;
+        this.geminiService = geminiService;
     }
 
     @PostMapping("/risk/{submissionId}")
     @PreAuthorize("hasRole('COORDINATOR') or hasRole('ADMIN')")
-    public ResponseEntity<RiskLog> analyzeRisk(@PathVariable Long submissionId) {
+    public ResponseEntity<SubmissionRisk> analyzeRisk(@PathVariable Long submissionId) {
         Optional<Submission> submission = submissionService.getSubmissionById(submissionId);
         if (submission.isEmpty()) {
             return ResponseEntity.notFound().build();
         }
-        RiskLog riskLog = aiService.analyzeRisk(submission.get());
-        return ResponseEntity.ok(riskLog);
+        SubmissionRisk risk = riskEngineService.calculateRisk(submission.get());
+        return ResponseEntity.ok(risk);
     }
 
     @GetMapping("/recommendation/{submissionId}")
@@ -40,7 +43,9 @@ public class AiController {
         if (submission.isEmpty()) {
             return ResponseEntity.notFound().build();
         }
-        String recommendation = aiService.generateRecommendation(submission.get());
+        String prompt = "Provide a recommendation for improving this capstone project submission. Submission details: " +
+                        "Status: " + submission.get().getStatus() + ". Suggest ways to enhance quality and meet deadlines.";
+        String recommendation = geminiService.generateRecommendation(prompt);
         return ResponseEntity.ok(recommendation);
     }
 }

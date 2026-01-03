@@ -26,25 +26,19 @@ public class SubmissionService {
         return submissionRepository.findById(id);
     }
 
-    public List<Submission> getSubmissionsByStudent(User student) {
-        return submissionRepository.findByStudent(student);
-    }
-
     public List<Submission> getAllSubmissions() {
         return submissionRepository.findAll();
     }
 
-    public List<Submission> getSubmissionsByStatus(SubmissionStatus status) {
-        return submissionRepository.findByStatus(status);
+    public List<Submission> getSubmissionsByGroupId(Long groupId) {
+        return submissionRepository.findByGroupId(groupId);
     }
 
-    public Submission updateSubmission(Long id, Submission updatedSubmission) {
+    public Submission updateSubmissionStatus(Long id, SubmissionStatus status) {
         Optional<Submission> existing = submissionRepository.findById(id);
         if (existing.isPresent()) {
             Submission submission = existing.get();
-            submission.setType(updatedSubmission.getType());
-            submission.setStatus(updatedSubmission.getStatus());
-            submission.setFeedback(updatedSubmission.getFeedback());
+            submission.setStatus(status);
             return submissionRepository.save(submission);
         }
         return null;
@@ -56,5 +50,25 @@ public class SubmissionService {
             return true;
         }
         return false;
+    }
+
+    public List<Submission> getSubmissionsByStatus(SubmissionStatus status) {
+        return submissionRepository.findByStatus(status);
+    }
+
+    public Submission updateSubmission(Long id, Submission submission) {
+        Optional<Submission> existing = submissionRepository.findById(id);
+        if (existing.isPresent()) {
+            Submission sub = existing.get();
+            sub.setMilestoneId(submission.getMilestoneId());
+            sub.setGroupId(submission.getGroupId());
+            sub.setStatus(submission.getStatus());
+            return submissionRepository.save(sub);
+        }
+        return null;
+    }
+
+    public List<Submission> getSubmissionsByStudent(User student) {
+        return submissionRepository.findByGroupId(student.getGroupId());
     }
 }

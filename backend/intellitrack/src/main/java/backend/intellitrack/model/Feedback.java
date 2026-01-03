@@ -11,44 +11,45 @@ public class Feedback {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
-    private Submission submission;
+    @Column(name = "submission_version_id", nullable = false)
+    private Long submissionVersionId;
 
-    @ManyToOne
-    private User adviser;
+    @Column(name = "adviser_id", nullable = false)
+    private Long adviserId;
 
-    private String summaryComment;
+    @Column(nullable = false)
+    private String comment;
 
+    @Column(nullable = false)
     private LocalDateTime createdAt;
+
+    public Feedback() {}
+
+    public Feedback(Long id, Long submissionVersionId, Long adviserId, String comment, LocalDateTime createdAt) {
+        this.id = id;
+        this.submissionVersionId = submissionVersionId;
+        this.adviserId = adviserId;
+        this.comment = comment;
+        this.createdAt = createdAt;
+    }
 
     @PrePersist
     void onCreate() {
         createdAt = LocalDateTime.now();
     }
 
-    public Feedback() {}
-
-    public Feedback(Long id, String summaryComment, LocalDateTime createdAt,
-                    Submission submission, User adviser) {
-        this.id = id;
-        this.summaryComment = summaryComment;
-        this.createdAt = createdAt;
-        this.submission = submission;
-        this.adviser = adviser;
-    }
-
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
 
-    public String getSummaryComment() { return summaryComment; }
-    public void setSummaryComment(String summaryComment) { this.summaryComment = summaryComment; }
+    public Long getSubmissionVersionId() { return submissionVersionId; }
+    public void setSubmissionVersionId(Long submissionVersionId) { this.submissionVersionId = submissionVersionId; }
+
+    public Long getAdviserId() { return adviserId; }
+    public void setAdviserId(Long adviserId) { this.adviserId = adviserId; }
+
+    public String getComment() { return comment; }
+    public void setComment(String comment) { this.comment = comment; }
 
     public LocalDateTime getCreatedAt() { return createdAt; }
     public void setCreatedAt(LocalDateTime createdAt) { this.createdAt = createdAt; }
-
-    public Submission getSubmission() { return submission; }
-    public void setSubmission(Submission submission) { this.submission = submission; }
-
-    public User getAdviser() { return adviser; }
-    public void setAdviser(User adviser) { this.adviser = adviser; }
 }

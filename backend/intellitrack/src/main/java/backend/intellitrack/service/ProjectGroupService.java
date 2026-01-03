@@ -20,6 +20,14 @@ public class ProjectGroupService {
         return projectGroupRepository.findAll();
     }
 
+    public List<ProjectGroup> getProjectGroupsByProjectId(Long projectId) {
+        return projectGroupRepository.findByProjectId(projectId);
+    }
+
+    public List<ProjectGroup> getProjectGroupsByAdviserId(Long adviserId) {
+        return projectGroupRepository.findByAdviserId(adviserId);
+    }
+
     public Optional<ProjectGroup> getProjectGroupById(Long id) {
         return projectGroupRepository.findById(id);
     }

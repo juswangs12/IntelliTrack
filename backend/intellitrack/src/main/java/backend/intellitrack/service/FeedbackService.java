@@ -20,6 +20,10 @@ public class FeedbackService {
         return feedbackRepository.findAll();
     }
 
+    public List<Feedback> getFeedbacksBySubmissionVersionId(Long submissionVersionId) {
+        return feedbackRepository.findBySubmissionVersionId(submissionVersionId);
+    }
+
     public Optional<Feedback> getFeedbackById(Long id) {
         return feedbackRepository.findById(id);
     }

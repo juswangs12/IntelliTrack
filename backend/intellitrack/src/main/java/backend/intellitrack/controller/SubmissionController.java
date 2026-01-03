@@ -45,14 +45,10 @@ public class SubmissionController {
         return ResponseEntity.ok(submission.get());
     }
 
-    @GetMapping("/student/{studentId}")
+    @GetMapping("/group/{groupId}")
     @PreAuthorize("hasRole('STUDENT') or hasRole('COORDINATOR') or hasRole('ADMIN')")
-    public ResponseEntity<List<Submission>> getSubmissionsByStudentId(@PathVariable Long studentId) {
-        Optional<User> student = userService.getUserById(studentId);
-        if (student.isEmpty()) {
-            return ResponseEntity.notFound().build();
-        }
-        List<Submission> submissions = submissionService.getSubmissionsByStudent(student.get());
+    public ResponseEntity<List<Submission>> getSubmissionsByGroupId(@PathVariable Long groupId) {
+        List<Submission> submissions = submissionService.getSubmissionsByGroupId(groupId);
         return ResponseEntity.ok(submissions);
     }
 
