@@ -25,7 +25,7 @@ public class AiController {
         this.geminiService = geminiService;
     }
 
-    @PostMapping("/risk/{submissionId}")
+    @GetMapping("/risk/{submissionId}")
     @PreAuthorize("hasRole('COORDINATOR') or hasRole('ADMIN')")
     public ResponseEntity<SubmissionRisk> analyzeRisk(@PathVariable Long submissionId) {
         Optional<Submission> submission = submissionService.getSubmissionById(submissionId);
@@ -36,15 +36,21 @@ public class AiController {
         return ResponseEntity.ok(risk);
     }
 
-    @GetMapping("/recommendation/{submissionId}")
+    @PostMapping("/recommendation")
     @PreAuthorize("hasRole('COORDINATOR') or hasRole('ADMIN')")
-    public ResponseEntity<String> getRecommendation(@PathVariable Long submissionId) {
-        Optional<Submission> submission = submissionService.getSubmissionById(submissionId);
-        if (submission.isEmpty()) {
-            return ResponseEntity.notFound().build();
+    public ResponseEntity<String> generateRecommendation(@RequestBody java.util.Map<String, Object> data) {
+        String prompt = "Provide a recommendation for improving this capstone project submission. ";
+        if (data.containsKey("submissionId")) {
+            Long submissionId = Long.valueOf(data.get("submissionId").toString());
+            Optional<Submission> submission = submissionService.getSubmissionById(submissionId);
+            if (submission.isPresent()) {
+                prompt += "Submission details: Status: " + submission.get().getStatus() + ". ";
+            }
         }
-        String prompt = "Provide a recommendation for improving this capstone project submission. Submission details: " +
-                        "Status: " + submission.get().getStatus() + ". Suggest ways to enhance quality and meet deadlines.";
+        if (data.containsKey("context")) {
+            prompt += data.get("context").toString();
+        }
+        prompt += " Suggest ways to enhance quality and meet deadlines.";
         String recommendation = geminiService.generateRecommendation(prompt);
         return ResponseEntity.ok(recommendation);
     }

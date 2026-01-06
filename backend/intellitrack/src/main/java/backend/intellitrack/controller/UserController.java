@@ -73,4 +73,17 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
         }
     }
-}
+
+    @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<?> deleteUser(@PathVariable Long id) {
+        boolean deleted = userService.deleteUser(id);
+        Map<String, String> response = new HashMap<>();
+        if (deleted) {
+            response.put("message", "User deleted successfully");
+            return ResponseEntity.ok(response);
+        } else {
+            response.put("message", "User not found");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+        }
+    }
